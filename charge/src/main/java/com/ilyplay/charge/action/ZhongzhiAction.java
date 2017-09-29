@@ -3,6 +3,8 @@ package com.ilyplay.charge.action;
 import com.ilyplay.charge.constant.ChargeType;
 import com.ilyplay.charge.model.Order;
 import com.ilyplay.charge.service.OrderService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.stereotype.Controller;
@@ -22,6 +24,9 @@ import java.util.Map;
 @Controller
 @EnableAutoConfiguration
 public class ZhongzhiAction {
+
+    private Logger logger = LoggerFactory.getLogger(ZhongzhiAction.class);
+
     private static final Map<Integer,String> provinceMap = new HashMap<>();
 
     static{
@@ -65,51 +70,60 @@ public class ZhongzhiAction {
     @RequestMapping("/zhongzhi")
     @ResponseBody
     String charge(HttpServletRequest request, HttpServletResponse response) {
-        String app_id = request.getParameter("app_id");
-        String channel = request.getParameter("channel_id");
-        //todo 文档 callback_args	渠道号（改）
-        if (channel == null || "".equals(channel)) {
-            channel = request.getParameter("callback_args");
+        String result = null;
+        try{
+
+            String app_id = request.getParameter("app_id");
+            String channel = request.getParameter("channel_id");
+            //todo 文档 callback_args	渠道号（改）
+            if (channel == null || "".equals(channel)) {
+                channel = request.getParameter("callback_args");
+            }
+            String cpParam = request.getParameter("user_orderid");
+            //1移动2联通3电信
+            String op_type = request.getParameter("op_type");
+            String orderDate = request.getParameter("order_date");
+            long orderTime = Long.valueOf(request.getParameter("order_time"));
+            String tradeId = request.getParameter("trade_id");
+            double price = Double.parseDouble(request.getParameter("code_money"));
+            String user_id = request.getParameter("user_id");
+            String point_id = request.getParameter("point_id");
+            int province = Integer.valueOf(request.getParameter("province_id"));
+
+            //todo 没有专门的order_id 把tradeid 当orderid
+            String order_id = request.getParameter("trade_id");
+
+
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(orderTime * 1000);
+            Date date = calendar.getTime();
+
+            Order order = new Order();
+            order.setApp_id(app_id).
+                    setChannel_id(channel).
+                    setOrder_id(order_id).
+                    setStatus(1).
+                    setPrice(price).
+                    setOrder_time(date).
+                    setTrade_id(tradeId).
+                    setOp_type(op_type).
+                    setProvince(provinceMap.getOrDefault(province, "")).
+                    setCp_param(cpParam).
+                    setOrder_type(ChargeType.ZHONGZHI).
+                    setNotify_time(new Date()).
+                    setUser_id(user_id).
+                    setPoint_id(point_id);
+
+            orderService.save(order);
+
+            result = "ok";
+        }catch (Exception e){
+            logger.error("zhongzhi notify error : ",e);
+            result = "error";
         }
-        String cpParam = request.getParameter("user_orderid");
-        //1移动2联通3电信
-        String op_type = request.getParameter("op_type");
-        String orderDate = request.getParameter("order_date");
-        long orderTime = Long.valueOf(request.getParameter("order_time"));
-        String tradeId = request.getParameter("trade_id");
-        double price = Double.parseDouble(request.getParameter("code_money"));
-        String user_id = request.getParameter("user_id");
-        String point_id = request.getParameter("point_id");
-        int province = Integer.valueOf(request.getParameter("province_id"));
-
-        //todo 没有专门的order_id 把tradeid 当orderid
-        String order_id = request.getParameter("trade_id");
 
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(orderTime * 1000);
-        Date date = calendar.getTime();
-
-        Order order = new Order();
-        order.setApp_id(app_id).
-                setChannel_id(channel).
-                setOrder_id(order_id).
-                setStatus(1).
-                setPrice(price).
-                setOrder_time(date).
-                setTrade_id(tradeId).
-                setOp_type(op_type).
-                setProvince(provinceMap.getOrDefault(province, "")).
-                setCp_param(cpParam).
-                setOrder_type(ChargeType.ZHONGZHI).
-                setNotify_time(new Date()).
-                setUser_id(user_id).
-                setPoint_id(point_id);
-
-        orderService.save(order);
-
-
-        return "ok";
+        return result;
     }
 
 //    http://localhost:8999/zhongzhi?app_id=1001&callback_args=channel_test&callback_args=channel_test&user_orderid=20160101000001&code_money=2000&op_type=1&order_date=2016-12-07&order_id=1050587658&order_time=1481077428&point_id=20152&province_id=19&province_name=%E9%BB%91%E9%BE%99%E6%B1%9F&trade_id=105058765801&unique_order_id=2016120710234889682&user_id=50021

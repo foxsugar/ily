@@ -3,6 +3,8 @@ package com.ilyplay.charge.action;
 import com.ilyplay.charge.constant.ChargeType;
 import com.ilyplay.charge.model.Order;
 import com.ilyplay.charge.service.OrderService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.stereotype.Controller;
@@ -23,7 +25,10 @@ import java.util.Map;
 @EnableAutoConfiguration
 public class MaiguangAction {
 
+    private static final Logger logger = LoggerFactory.getLogger(MaiguangAction.class);
+
     private static Map<Integer, String> provinceMap = new HashMap<>();
+
     static{
         provinceMap.put(1,"内蒙古");
         provinceMap.put(2,"贵州");
@@ -68,57 +73,61 @@ public class MaiguangAction {
     @ResponseBody
     Object charge(HttpServletRequest request, HttpServletResponse response) {
 
-        String tradeId = request.getParameter("TransactionID");
-        String sun_order_id = request.getParameter("SubTransactionID");
-        // 1是成功
-        int status = Integer.valueOf(request.getParameter("Status"));
-        Double mo_price = Double.parseDouble(request.getParameter("TotalMoney"));
-        Double valid_price = Double.parseDouble(request.getParameter("ValidMoney"));
-        Double total_price = Double.parseDouble(request.getParameter("MoMoney"));
-        String cpParam = request.getParameter("Ext");
-        String order_id = request.getParameter("OID");
-        String goods_id = request.getParameter("GoodsID");
-        String channel = request.getParameter("ChannelID");
-        long orderTime = Long.valueOf(request.getParameter("TransactionTime"));
-        String ip = request.getParameter("IP");
-        // 1移动 2联通 3电信
-        String op_type = request.getParameter("Provider");
-        String province = request.getParameter("Province");
-
-        String sign = request.getParameter("sign");
-
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(orderTime);
-        Date date = calendar.getTime();
-
-        Order order = new Order();
-        order.setChannel_id(channel).
-                setOrder_id(order_id).
-                setStatus(status).
-                setPrice(total_price).
-                setOrder_time(date).
-                setTrade_id(tradeId).
-                setOp_type(op_type).
-                setProvince(provinceMap.getOrDefault(province, "")).
-                setCp_param(cpParam).
-                setOrder_type(ChargeType.MAIGUANG).
-                setNotify_time(new Date()).
-                setApp_id(goods_id);
-
-        orderService.save(order);
-
         Map<String, Object> result = new HashMap<>();
-        result.put("flag", 0);
-        result.put("msg", "success");
+
+        try {
+
+            String tradeId = request.getParameter("TransactionID");
+            String sun_order_id = request.getParameter("SubTransactionID");
+            // 1是成功
+            int status = Integer.valueOf(request.getParameter("Status"));
+            Double mo_price = Double.parseDouble(request.getParameter("TotalMoney"));
+            Double valid_price = Double.parseDouble(request.getParameter("ValidMoney"));
+            Double total_price = Double.parseDouble(request.getParameter("MoMoney"));
+            String cpParam = request.getParameter("Ext");
+            String order_id = request.getParameter("OID");
+            String goods_id = request.getParameter("GoodsID");
+            String channel = request.getParameter("ChannelID");
+            long orderTime = Long.valueOf(request.getParameter("TransactionTime"));
+            String ip = request.getParameter("IP");
+            // 1移动 2联通 3电信
+            String op_type = request.getParameter("Provider");
+            String province = request.getParameter("Province");
+
+            String sign = request.getParameter("sign");
+
+
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(orderTime);
+            Date date = calendar.getTime();
+
+            Order order = new Order();
+            order.setChannel_id(channel).
+                    setOrder_id(order_id).
+                    setStatus(status).
+                    setPrice(total_price).
+                    setOrder_time(date).
+                    setTrade_id(tradeId).
+                    setOp_type(op_type).
+                    setProvince(provinceMap.getOrDefault(province, "")).
+                    setCp_param(cpParam).
+                    setOrder_type(ChargeType.MAIGUANG).
+                    setNotify_time(new Date()).
+                    setApp_id(goods_id);
+
+            orderService.save(order);
+
+            result.put("flag", 1);
+            result.put("msg", "success");
+        }catch (Exception e){
+            logger.error("maiguang notify error : ",e);
+            result.put("flag", 0);
+            result.put("msg", "error");
+        }
 
         return result;
     }
 
-
-    private static String getProvince(int code) {
-        return provinceMap.getOrDefault(code, "");
-    }
 }
 
-//http://localhost:8999/maiguang?ChannelID=mai001&Ext=0&GoodsID=30&IP=0&OID=1447840073915&Price=0&Provider=0&Province=0&Status=0&TransactionID=1324546576&TotalMoney=1&ValidMoney=1&MoMoney=1&TransactionTime=1000000000000
+    //http://localhost:8999/maiguang?ChannelID=mai001&Ext=0&GoodsID=30&IP=0&OID=1447840073915&Price=0&Provider=0&Province=0&Status=0&TransactionID=1324546576&TotalMoney=1&ValidMoney=1&MoMoney=1&TransactionTime=1000000000000
