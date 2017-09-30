@@ -1,0 +1,13 @@
+setup.py
+admin/__init__.py
+admin/settings.py
+admin/urls.py
+admin/wsgi.py
+admin/apps/__init__.py
+ily_admin.egg-info/PKG-INFO
+ily_admin.egg-info/SOURCES.txt
+ily_admin.egg-info/dependency_links.txt
+ily_admin.egg-info/entry_points.txt
+ily_admin.egg-info/not-zip-safe
+ily_admin.egg-info/requires.txt
+ily_admin.egg-info/top_level.txt
