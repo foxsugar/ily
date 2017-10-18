@@ -5,6 +5,7 @@ import com.ilyplay.charge.constant.ChargeType;
 import com.ilyplay.charge.model.Order;
 import com.ilyplay.charge.service.OrderService;
 import com.ilyplay.charge.utils.MD5Util;
+import com.ilyplay.charge.utils.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,7 +84,7 @@ public class PingzhiAction {
 //        String md5 = getMD5(tradeId, orderTime, order_id, "" + status, "" + price, cpParam, serverConfig.getPingzhi_key());
 //
 //        logger.info("md5 = " + md5);
-
+            order.setApp_index(StringUtil.getAppIndex("" + order.getOrder_type(), order.getApp_id(), order.getChannel_id()));
             orderService.save(order);
             result = "OK";
         } catch (Exception e) {

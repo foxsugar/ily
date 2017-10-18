@@ -3,6 +3,7 @@ package com.ilyplay.charge.action;
 import com.ilyplay.charge.constant.ChargeType;
 import com.ilyplay.charge.model.Order;
 import com.ilyplay.charge.service.OrderService;
+import com.ilyplay.charge.utils.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -114,6 +115,7 @@ public class ZhongzhiAction {
                     setUser_id(user_id).
                     setPoint_id(point_id);
 
+            order.setApp_index(StringUtil.getAppIndex("" + order.getOrder_type(), order.getApp_id(), order.getChannel_id()));
             orderService.save(order);
 
             result = "ok";

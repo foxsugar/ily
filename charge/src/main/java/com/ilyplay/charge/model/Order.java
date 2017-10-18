@@ -44,6 +44,7 @@ public class Order {
 //    private String version;//客户端版本
 
     private Date notify_time;//通知时间
+    private String app_index;
 
 
 
@@ -210,4 +211,12 @@ public class Order {
         return this;
     }
 
+    public String getApp_index() {
+        return app_index;
+    }
+
+    public Order setApp_index(String app_index) {
+        this.app_index = app_index;
+        return this;
+    }
 }

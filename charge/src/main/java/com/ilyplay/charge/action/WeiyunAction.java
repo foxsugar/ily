@@ -3,6 +3,7 @@ package com.ilyplay.charge.action;
 import com.ilyplay.charge.constant.ChargeType;
 import com.ilyplay.charge.model.Order;
 import com.ilyplay.charge.service.OrderService;
+import com.ilyplay.charge.utils.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +34,7 @@ public class WeiyunAction {
     @ResponseBody
     String charge(HttpServletRequest request, HttpServletResponse response) {
         String result = null;
-        try{
+        try {
             //todo ip白名单
             String app_id = request.getParameter("app_code");
             String channel = request.getParameter("channel");
@@ -64,12 +65,13 @@ public class WeiyunAction {
                     setOrder_time(date).
                     setOrder_type(ChargeType.WEIYUN).
                     setNotify_time(new Date());
+            order.setApp_index(StringUtil.getAppIndex("" + order.getOrder_type(), order.getApp_id(), order.getChannel_id()));
 
             orderService.save(order);
 
             result = "OK";
-        }catch (Exception e){
-            logger.error("weiyun notify error : ",e);
+        } catch (Exception e) {
+            logger.error("weiyun notify error : ", e);
             result = "ERROR";
         }
 
