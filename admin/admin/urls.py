@@ -15,8 +15,33 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
+from admin.apps import views
+
+
+
+
+
+
+
+
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
 
+    # 登录
+    url(r'^user/login$', views.login),
+    url(r'^user/info$', views.get_info),
+
+    # 代理
+    url(r'^agent/list$', views.agent_list),
+
+    url(r'^agent$', views.agent),
+
+
+    #产品
+    url(r'^product/list$', views.product_list),
+    url(r'^product$', views.product),
+
+    #订单
+    url(r'^order/list$', views.order_list),
 ]

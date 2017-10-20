@@ -25,6 +25,7 @@ SECRET_KEY = 'a-qq64ewutm*p)488=dx)t7+-z23!_(z!eoh0e7@^%&gy-fxd!'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+
 ALLOWED_HOSTS = [
     '192.168.1.132',
     # '192.168.1.101',
@@ -38,7 +39,7 @@ INSTALLED_APPS = [
     # 'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
-    'django.contrib.sessions',
+    # 'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'admin.apps',
@@ -94,7 +95,7 @@ CORS_ALLOW_HEADERS = (
     'Pragma',
 )
 
-ROOT_URLCONF = 'summer_admin.urls'
+ROOT_URLCONF = 'admin.urls'
 
 TEMPLATES = [
     {
@@ -161,8 +162,9 @@ USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
-
+# USE_TZ = False
+USE_TZ = False
+# TIME_ZONE = 'Asia/Shanghai'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/

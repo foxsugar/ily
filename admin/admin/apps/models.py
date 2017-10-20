@@ -52,6 +52,7 @@ class Users(models.Model):
     vip = models.IntegerField(default=0)
     user_info = models.TextField(default='')
 
+
     class Meta:
         db_table = 'users'
         verbose_name = '用户表'
@@ -69,6 +70,7 @@ class Order(models.Model):
     notify_time = models.DateTimeField(auto_now=True)
     order_time = models.DateTimeField(auto_now=True)
     op_type = models.CharField(max_length=255, default='')
+    order_type = models.IntegerField(default=0)
     order_id = models.CharField(max_length=255, default='')
     sub_order_id = models.CharField(max_length=255, default='')
     user_id = models.CharField(max_length=255, default='')
@@ -88,8 +90,12 @@ class Order(models.Model):
 class Product(models.Model):
     id = models.AutoField('id', primary_key=True)
     name = models.CharField(max_length=255, default='')
-    describe = models.CharField(max_length=4000, default='')
+    code_id = models.IntegerField(default=0)
+    app_id = models.CharField(max_length=255, default='')
+    channel_id = models.CharField(max_length=255, default='')
+    description = models.CharField(max_length=4000, default='')
     create_time = models.DateTimeField(auto_now=True)
+    status = models.IntegerField(default=0)
 
     class Meta:
         db_table = 'product'

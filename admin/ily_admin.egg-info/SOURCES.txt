@@ -4,6 +4,8 @@ admin/settings.py
 admin/urls.py
 admin/wsgi.py
 admin/apps/__init__.py
+admin/apps/models.py
+admin/apps/views.py
 ily_admin.egg-info/PKG-INFO
 ily_admin.egg-info/SOURCES.txt
 ily_admin.egg-info/dependency_links.txt

@@ -10,10 +10,12 @@ from admin.apps.models import *
 
 TIME_OUT = 60 * 60 * 2
 
+
 def check_login(func):
     """
     检测登录装饰器
     """
+
     def wrapper(req):
         print(req)
         x_token = req.META['HTTP_X_TOKEN']
@@ -58,7 +60,6 @@ def get_info(request):
 
 @check_login
 def agent_list(request):
-
     """代理列表"""
     page = int(str(request.GET['page']))
     size = int(str(request.GET['size']))
@@ -71,6 +72,79 @@ def agent_list(request):
         td.append(agent2vo(t))
 
     total_page = Agent_user.objects.count()
+
+    data = {'tableData': td, 'totalPage': total_page}
+
+    return JsonResponse({'code': 20000, 'data': data})
+
+
+def product_list(request):
+    """代理列表"""
+    page = int(str(request.GET['page']))
+    size = int(str(request.GET['size']))
+    index_left = (page - 1) * size
+    index_right = page * size
+    #
+    table_data = list(Product.objects.values()[index_left:index_right])
+    td = []
+    for t in table_data:
+        d = dict(t)
+        # 日期转换
+        d['create_time'] = str(t['create_time']).split('.')[0]
+        td.append(d)
+
+    total_page = Product.objects.count()
+
+    data = {'tableData': td, 'totalPage': total_page}
+
+    return JsonResponse({'code': 20000, 'data': data})
+
+
+def product(request):
+    """代理列表"""
+    param = json.loads(str(request.GET['productForm']))
+    method = request.method
+    if method == 'POST':
+        name = param['name']
+        description = param['description']
+        pd = Product()
+        pd.name = name
+        pd.description = description
+        pd.code_id = param['code_id']
+        pd.app_id = param['app_id']
+        pd.channel_id = param['channel_id']
+        pd.create_time = datetime.datetime.now()
+        print(pd.create_time)
+        pd.save()
+        data = {'msg': 'ok'}
+        return JsonResponse({'code': 20000, 'data': data})
+    if method == 'PUT':
+        print('[[[[')
+
+def order_list(request):
+    """订单列表"""
+    print("000")
+    page = int(str(request.GET['page']))
+    size = int(str(request.GET['size']))
+    index_left = (page - 1) * size
+    index_right = page * size
+    #
+    # 找到所有的app
+
+    values = Order.objects.filter(status=1).values()
+
+
+    table_data = list(values)[index_left:index_right]
+
+    td = []
+    for t in table_data:
+        d = dict(t)
+        # 日期转换
+        d['order_time'] = str(t['order_time']).split('.')[0]
+        d['notify_time'] = str(t['notify_time']).split('.')[0]
+        td.append(d)
+
+    total_page = values.count()
 
     data = {'tableData': td, 'totalPage': total_page}
 
