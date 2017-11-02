@@ -1,4 +1,4 @@
-"""admin URL Configuration
+"""admin_python URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/1.10/topics/http/urls/
@@ -15,11 +15,8 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from admin.apps import views
-
-
-
-
+from summer_admin.apps import views
+from summer_admin.apps import playerViews
 
 
 
@@ -27,21 +24,39 @@ from admin.apps import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-
-    # 登录
+    #登录
     url(r'^user/login$', views.login),
     url(r'^user/info$', views.get_info),
-
-    # 代理
+    #代理
     url(r'^agent/list$', views.agent_list),
-
     url(r'^agent$', views.agent),
+    url(r'^agent/charge$', views.agent_charge),
+    url(r'^agent/chargelist$', playerViews.agent_charge_list),
 
+    url(r'^agent/fetchself$', playerViews.agent_fetch_slf),
 
-    #产品
+    url(r'^agent/fetchdelegates', playerViews.fetch_delegates),
+    #搜索代理充值列表
+    url(r'^agent/fetchlist$', playerViews.search_agent_charge),
+    url(r'^player/charge$', playerViews.charge),
+    url(r'^player/list$', playerViews.user_list),
+
+    #搜索用户列表
+    url(r'^player/fetchlist$', playerViews.search_player),
+    url(r'^player/fetchplayers$', playerViews.serarch_player_list),
+    url(r'^player/chargelist$', playerViews.charge_list),
+
+    url(r'^user/logout$', playerViews.logout),
+    url(r'^user/deldelegate', playerViews.delete_delegate),
+
+    # 服务器信息
+    url(r'^constant$', views.constant),
+    url(r'^constant/update$', views.constant_update),
+
+    # 产品
     url(r'^product/list$', views.product_list),
     url(r'^product$', views.product),
 
-    #订单
+    # 订单
     url(r'^order/list$', views.order_list),
 ]

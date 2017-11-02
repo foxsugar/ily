@@ -26,7 +26,6 @@ class Agent_user(models.Model):
         db_table = 'agent_user'
         verbose_name = '代理'
         verbose_name_plural = '代理'
-        managed = True
 
 
 class Users(models.Model):
@@ -52,7 +51,6 @@ class Users(models.Model):
     vip = models.IntegerField(default=0)
     user_info = models.TextField(default='')
 
-
     class Meta:
         db_table = 'users'
         verbose_name = '用户表'
@@ -60,47 +58,19 @@ class Users(models.Model):
         managed = False
 
 
-class Order(models.Model):
-    trade_id = models.CharField(primary_key=True,max_length=255)
-    app_id = models.CharField(max_length=255, default='')
-    channel_id = models.CharField(max_length=255, default='')
-    cp_param = models.CharField(max_length=255, default='')
-    imei = models.CharField(max_length=255, default='')
-    imsi = models.CharField(max_length=255, default='')
-    notify_time = models.DateTimeField(auto_now=True)
-    order_time = models.DateTimeField(auto_now=True)
-    op_type = models.CharField(max_length=255, default='')
-    order_type = models.IntegerField(default=0)
-    order_id = models.CharField(max_length=255, default='')
-    sub_order_id = models.CharField(max_length=255, default='')
-    user_id = models.CharField(max_length=255, default='')
-    phone = models.CharField(max_length=255, default='')
-    point_id = models.CharField(max_length=255, default='')
-    province = models.CharField(max_length=255, default='')
-    price = models.FloatField(default=0)
-    status = models.IntegerField(default=0)
+class Agent_charge(models.Model):
+    id = models.AutoField(primary_key=True)
+    agent_id = models.IntegerField('充值id', default=0)
+    charge_src_agent = models.IntegerField('充值原代理id', default=0)
+    charge_type = models.IntegerField('充值类型', default=0)
+    charge_num = models.FloatField('充值数量', default=0)
+    charge_time = models.DateTimeField('充值时间', auto_now=True)
 
     class Meta:
-        db_table = 'orders'
-        verbose_name = '订单表'
-        verbose_name_plural = '订单'
-        managed = False
-
-
-class Product(models.Model):
-    id = models.AutoField('id', primary_key=True)
-    name = models.CharField(max_length=255, default='')
-    code_id = models.IntegerField(default=0)
-    app_id = models.CharField(max_length=255, default='')
-    channel_id = models.CharField(max_length=255, default='')
-    description = models.CharField(max_length=4000, default='')
-    create_time = models.DateTimeField(auto_now=True)
-    status = models.IntegerField(default=0)
-
-    class Meta:
-        db_table = 'product'
-        verbose_name = '产品表'
-        verbose_name_plural = '产品'
+        db_table = 'agent_charge'
+        verbose_name = '代理充值表表'
+        verbose_name_plural = '代理充值'
+        managed = True
 
 
 class Constant(models.Model):
@@ -122,3 +92,71 @@ class Constant(models.Model):
         verbose_name = '常量表'
         verbose_name_plural = '常量表'
         managed = False
+
+class Charge(models.Model):
+    order_id = models.CharField(max_length=255, primary_key=True)
+    # order_id = models.AutoField()
+    createtime = models.DateTimeField('创建时间', auto_now=True)
+    money = models.FloatField('充值金额', default='')
+    money_point = models.FloatField('充值点数')
+    origin = models.IntegerField(default=0)
+    recharge_source = models.CharField(max_length=255, default='')
+    share_area = models.CharField(max_length=255, default='')
+    share_content = models.CharField(max_length=255, default='')
+    shareid = models.IntegerField(default=0)
+    sign = models.CharField(max_length=255, default='')
+    sp_ip = models.CharField(max_length=255, default='')
+    status = models.IntegerField(default=0)
+    userid = models.IntegerField(default=0)
+    username = models.CharField(max_length=255, default='')
+    transaction_id = models.CharField(max_length=255, default='')
+    class Meta:
+        db_table = 'charge'
+        verbose_name = '充值记录表'
+        verbose_name_plural = '充值记录表'
+        managed = False
+
+
+class Orders(models.Model):
+    trade_id = models.CharField(primary_key=True,max_length=255)
+    app_id = models.CharField(max_length=255, default='')
+    channel_id = models.CharField(max_length=255, default='')
+    cp_param = models.CharField(max_length=255, default='')
+    imei = models.CharField(max_length=255, default='')
+    imsi = models.CharField(max_length=255, default='')
+    notify_time = models.DateTimeField(auto_now=True)
+    order_time = models.DateTimeField(auto_now=True)
+    op_type = models.CharField(max_length=255, default='')
+    order_type = models.IntegerField(default=0)
+    order_id = models.CharField(max_length=255, default='')
+    sub_order_id = models.CharField(max_length=255, default='')
+    user_id = models.CharField(max_length=255, default='')
+    phone = models.CharField(max_length=255, default='')
+    point_id = models.CharField(max_length=255, default='')
+    province = models.CharField(max_length=255, default='')
+    price = models.FloatField(default=0)
+    status = models.IntegerField(default=0)
+    app_index = models.CharField(max_length=255, default='')
+
+    class Meta:
+        db_table = 'orders'
+        verbose_name = '订单表'
+        verbose_name_plural = '订单'
+        managed = False
+
+
+class Product(models.Model):
+    id = models.AutoField('id', primary_key=True)
+    name = models.CharField(max_length=255, default='')
+    code_id = models.IntegerField(default=0)
+    app_id = models.CharField(max_length=255, default='')
+    channel_id = models.CharField(max_length=255, default='')
+    description = models.CharField(max_length=4000, default='')
+    create_time = models.DateTimeField(auto_now=True)
+    status = models.IntegerField(default=0)
+    agent_id = models.IntegerField(default=0)
+
+    class Meta:
+        db_table = 'product'
+        verbose_name = '产品表'
+        verbose_name_plural = '产品'

@@ -2,16 +2,16 @@ from setuptools import setup, find_packages
 
 setup(
 
-    name="ily_admin",
+    name="summer_admin",
     version="1.0",
     keywords=("test", "xxx"),
-    description=" admin",
-    long_description=" admin for python",
+    description="summer admin",
+    long_description="summer adminfor python",
     license="MIT Licence",
 
     url="url",
-    author="sun",
-    author_email="",
+    author="test",
+    author_email="test@gmail.com",
 
     packages=find_packages(),
     include_package_data=True,
@@ -20,7 +20,8 @@ setup(
         'pymysql>=0.7.11',
         'django>=1.10.3',
         'django-cors-headers>=2.1.0',
-        'thrift>=0.10.0'
+        'thrift>=0.10.0',
+        'configparser>=3.5.0'
     ],
 
     scripts=[],
