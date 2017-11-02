@@ -13,4 +13,14 @@ export function constant(method, constantForm) {
   })
 }
 
+export function update(constantForm) {
+  return fetch({
+    url: '/constant/update',
+    method: 'get',
+    params: {
+      constantForm
+    }
+  })
+}
+
 

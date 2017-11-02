@@ -46,16 +46,16 @@ export const asyncRouterMap = [
   //   ]
   // },
 
-  {
-    path: '/constant',
-    component: Layout,
-    redirect: '/constant/index',
-    icon: 'zujian',
-    noDropdown: true,
-    children: [
-      { path: 'index', name: '服务器参数', component: _import('constant/index'), meta: { role: ['admin'] }}
-    ]
-  },
+  // {
+  //   path: '/constant',
+  //   component: Layout,
+  //   redirect: '/constant/index',
+  //   icon: 'zujian',
+  //   noDropdown: true,
+  //   children: [
+  //     { path: 'index', name: '服务器参数', component: _import('constant/index'), meta: { role: ['admin'] }}
+  //   ]
+  // },
 
   // {
   //   path: '/table',
@@ -75,52 +75,74 @@ export const asyncRouterMap = [
     icon: 'yonghuming',
     noDropdown: true,
     children: [
-      { path: 'index', name: '代理管理', component: _import('agent/index'), meta: { role: ['admin'] }}
+      { path: 'index', name: '代理管理', component: _import('agent/index'), meta: { role: ['delegate'] }}
     ]
   },
 
+  // {
+  //   path: '/player',
+  //   component: Layout,
+  //   redirect: '/player/index',
+  //   icon: 'yonghuming',
+  //   noDropdown: true,
+  //   children: [
+  //     { path: 'index', name: '玩家管理', component: _import('player/index'), meta: { role: ['delegate'] }}
+  //   ]
+  // },
+  // {
+  //   path: '/charge',
+  //   component: Layout,
+  //   redirect: '/charge/index',
+  //   icon: 'tubiao',
+  //   noDropdown: true,
+  //   children: [
+  //     { path: 'index', name: '充值管理', component: _import('charge/index'), meta: { role: ['delegate'] }}
+  //   ]
+  // },
+
+  // {
+  //   path: '/playercharge',
+  //   component: Layout,
+  //   redirect: '/playercharge/index',
+  //   icon: 'tubiao',
+  //   noDropdown: true,
+  //   children: [
+  //     { path: 'index', name: '充值记录', component: _import('playercharge/index'), meta: { role: ['delegate'] }}
+  //   ]
+  // },
+
+  // {
+  //   path: '/agentcharge',
+  //   component: Layout,
+  //   redirect: '/agentcharge/index',
+  //   icon: 'tubiao',
+  //   noDropdown: true,
+  //   children: [
+  //     { path: 'index', name: '代理充值', component: _import('agentcharge/index'), meta: { role: ['delegate'] }}
+  //   ]
+  // },
+
   {
-    path: '/player',
+    path: '/person',
     component: Layout,
-    redirect: '/player/index',
+    redirect: '/person/index',
     icon: 'yonghuming',
     noDropdown: true,
     children: [
-      { path: 'index', name: '玩家管理', component: _import('player/index'), meta: { role: ['admin'] }}
-    ]
-  },
-  {
-    path: '/charge',
-    component: Layout,
-    redirect: '/charge/index',
-    icon: 'tubiao',
-    noDropdown: true,
-    children: [
-      { path: 'index', name: '充值管理', component: _import('charge/index'), meta: { role: ['admin'] }}
+      { path: 'index', name: '个人信息', component: _import('person/index'), meta: { role: ['delegate'] }}
     ]
   },
 
-  {
-    path: '/playercharge',
-    component: Layout,
-    redirect: '/playercharge/index',
-    icon: 'tubiao',
-    noDropdown: true,
-    children: [
-      { path: 'index', name: '充值记录', component: _import('playercharge/index'), meta: { role: ['admin'] }}
-    ]
-  },
-
-  {
-    path: '/agentcharge',
-    component: Layout,
-    redirect: '/agentcharge/index',
-    icon: 'tubiao',
-    noDropdown: true,
-    children: [
-      { path: 'index', name: '代理充值', component: _import('agentcharge/index'), meta: { role: ['admin'] }}
-    ]
-  },
+  // {
+  //   path: '/test',
+  //   component: Layout,
+  //   redirect: '/agent/test',
+  //   icon: 'tubiao',
+  //   noDropdown: true,
+  //   children: [
+  //     { path: 'test', name: 'test', component: _import('agent/test'), meta: { role: ['admin'] }}
+  //   ]
+  // },
   {
     path: '/product',
     component: Layout,
@@ -142,15 +164,5 @@ export const asyncRouterMap = [
       { path: 'index', name: '订单管理', component: _import('order/index'), meta: { role: ['admin'] }}
     ]
   },
-  // {
-  //   path: '/test',
-  //   component: Layout,
-  //   redirect: '/agent/test',
-  //   icon: 'tubiao',
-  //   noDropdown: true,
-  //   children: [
-  //     { path: 'test', name: 'test', component: _import('agent/test'), meta: { role: ['admin'] }}
-  //   ]
-  // },
   { path: '*', redirect: '/404', hidden: true }
 ]

@@ -8,12 +8,12 @@
 
       <div class="filter-container">
         <el-input @keyup.enter.native="handleClick" style="width: 150px;" class="filter-item"
-                  placeholder="名称"></el-input>
+                  placeholder="订单"></el-input>
 
         <el-button class="filter-item" type="primary" v-waves icon="search" @click="handleClick">搜索</el-button>
-        <el-button class="filter-item" style="margin-left: 10px;" @click="addProduct" type="primary" icon="plus">
-          添加应用
-        </el-button>
+        <!--<el-button class="filter-item" style="margin-left: 10px;" @click="addProduct" type="primary" icon="plus">-->
+          <!--添加应用-->
+        <!--</el-button>-->
 
 
       </div>

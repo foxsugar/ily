@@ -21,8 +21,16 @@
         <el-input v-model="constantForm.apple_check" placeholder=""></el-input>
       </el-form-item>
 
+      <el-form-item label="跑马灯">
+        <el-input type="textarea" v-model="constantForm.marquee" placeholder=""></el-input>
+      </el-form-item>
+
+      <el-form-item label="下载地址">
+        <el-input  v-model="constantForm.download" placeholder=""></el-input>
+      </el-form-item>
+
       <el-form-item>
-        <el-button type="primary" @click="onSubmit">充值</el-button>
+        <el-button type="primary" @click="onSubmit">修改</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -31,6 +39,7 @@
 
 <script>
   import {constant} from '@/api/constant'
+  import {update} from '@/api/constant'
   export default {
     data() {
       return {
@@ -60,14 +69,12 @@
         });
       },
       onSubmit() {
-        charge(this.constantForm).then(response => {
-          console.log(response)
-          this.$message({
-            message: '充值成功',
-            type: 'success'
+          update(this.constantForm).then(response=>{
+            this.$message({
+              message: '修改成功',
+              type: 'success'
+            });
           });
-        });
-        console.log('submit!');
       }
     }
   }

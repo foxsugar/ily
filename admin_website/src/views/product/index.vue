@@ -32,6 +32,9 @@
           <el-input v-model="productForm.channel_id"></el-input>
         </el-form-item>
 
+        <el-form-item label="代理id" :label-width="formLabelWidth" prop="agent_id">
+          <el-input v-model="productForm.agent_id"></el-input>
+        </el-form-item>
       </el-form>
 
       <div slot="footer" class="dialog-footer">
@@ -78,6 +81,10 @@
           <el-input v-model="productForm.channel_id"></el-input>
         </el-form-item>
 
+        <el-form-item label="代理id" :label-width="formLabelWidth" prop="agent_id">
+          <el-input v-model="productForm.agent_id"></el-input>
+        </el-form-item>
+
       </el-form>
 
       <div slot="footer" class="dialog-footer">
@@ -117,6 +124,7 @@
         </el-table-column>
         <el-table-column align="center" prop="app_id" label="app_id" width="200"></el-table-column>
         <el-table-column align="center" prop="channel_id" label="channel_id" width="200"></el-table-column>
+        <el-table-column align="center" prop="agent_id" label="代理id" width="200"></el-table-column>
 
         <el-table-column align="center" prop="description" label="描述" width="400"></el-table-column>
         <el-table-column align="center" prop="create_time" label="创建时间" width="200"></el-table-column>
@@ -156,15 +164,12 @@
   import waves from '@/directive/waves.js'
   import ElForm from "../../../node_modules/element-ui/packages/form/src/form";
   // 水波纹指令
-
   export default {
     components: {ElForm},
     directives: {
       waves
     },
-
     methods: {
-
       addProduct(){
         this.dialogFormVisible = true
       },
@@ -178,11 +183,9 @@
         console.log(  this.productForm.code_id)
         this.productForm.app_id = scope.row.app_id
         this.productForm.channel_id = scope.row.channel_id
+        this.productForm.agent_id = scope.row.agent_id
         this.productForm.description = scope.row.description
-
         this.doUpdateAgent("productForm")
-
-
       },
       doAddProduct(formName){
         this.$refs[formName].validate((valid) => {
@@ -196,21 +199,17 @@
               this.dialogFormVisible = false;
               //重新获取数据
               this.fetchData()
-
             })
           } else {
             console.log('提交失败');
             return false;
           }
         });
-
       },
-
       handleClick(){
       },
       doDeleteAgent(){
         product(this.productForm, 'DELETE').then(response => {
-
         })
       },
       doUpdateAgent(formName){
@@ -225,14 +224,12 @@
               this.editFormVisible = false;
               //重新获取数据
               this.fetchData()
-
             })
           } else {
             console.log('提交失败');
             return false;
           }
         });
-
       },
       handleSizeChange(val) {
         console.log(`每页 ${val} 条`)
@@ -251,7 +248,6 @@
           this.totalPage = response.data.totalPage;
           this.listLoading = false;
         });
-
       },
       handleClose(done){
         this.$confirm('确认关闭？')
@@ -261,20 +257,15 @@
           .catch(_ => {
           });
       },
-
       getOptionKey(value){
         for (var i = 0; i < this.options.length; i++) {
           var opt = this.options[i];
           if (value == opt.value) {
             return opt.label
           }
-
         }
-
       }
-
     },
-
     created() {
       this.fetchData()
     },
@@ -286,7 +277,6 @@
         currentPage: 1,
         page_size: 20,
         page_sizes: [20, 50, 100, 200],
-
         dialogTableVisible: false,
         dialogFormVisible: false,
         editFormVisible: false,
@@ -298,37 +288,37 @@
           create_time: '',
           code_id: '',
           app_id: '',
-          channel_id: ''
+          channel_id: '',
+          agent_id:''
         },
-
         formLabelWidth: '120px',
         rules: {
           name: [
             {required: true, message: '请输入应用名称', trigger: 'blur'},
 //            {min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur'}
           ],
-
           description: [
 //            {required: true, message: '密码不能为空', trigger: 'blur'},
 //            {min: 6, max: 18, message: '长度在6 到 18位', trigger: 'blur'}
           ],
-
           code_id: [
             {required: true, message: '请选择代码方', trigger: 'blur'},
 //            {min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur'}
           ],
-
           app_id: [
             {required: true, message: '请输入app_id', trigger: 'blur'},
 //            {min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur'}
           ],
-
           channel_id: [
             {required: true, message: '请输入渠道id', trigger: 'blur'},
 //            {min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur'}
           ],
-        },
 
+          agent_id: [
+            {required: true, message: '请输入代理id', trigger: 'blur'},
+//            {min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur'}
+          ],
+        },
         options: [{
           value: '1',
           label: '微云'
@@ -343,7 +333,6 @@
           label: '中至'
         }],
         value: ''
-
       }
     }
   }

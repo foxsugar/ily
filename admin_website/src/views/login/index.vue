@@ -21,8 +21,8 @@
           登录
         </el-button>
       </el-form-item>
-      <div class='tips'>账号:admin 密码随便填</div>
-      <div class='tips'>账号:editor  密码随便填</div>
+      <!--<div class='tips'>账号:admin 密码随便填</div>-->
+      <!--<div class='tips'>账号:editor  密码随便填</div>-->
     </el-form>
   </div>
 </template>
@@ -51,7 +51,7 @@ export default {
     return {
       loginForm: {
         username: 'admin',
-        password: '111111'
+        password: ''
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur', validator: validateUsername }],

@@ -33,15 +33,15 @@
 
         <el-table-column align="center" prop="userid" label="用户id" width="150"></el-table-column>
 
-        <el-table-column align="center" fixed="right" label="操作" min-width="220">
-          <template scope="scope">
-            <el-button :type="scope.row.edit?'success':'primary'" @click='handleEditClick(scope)' size="small"
-                       icon="edit">{{scope.row.edit ? '完成' : '编辑'}}
-            </el-button>
-            <!--<el-button @click="handleClick" type="primary" size="small">编辑</el-button>-->
-            <el-button @click="handleClick" type="danger" size="small">删除</el-button>
-          </template>
-        </el-table-column>
+        <!--<el-table-column align="center" fixed="right" label="操作" min-width="220">-->
+          <!--<template scope="scope">-->
+            <!--<el-button :type="scope.row.edit?'success':'primary'" @click='handleEditClick(scope)' size="small"-->
+                       <!--icon="edit">{{scope.row.edit ? '完成' : '编辑'}}-->
+            <!--</el-button>-->
+            <!--&lt;!&ndash;<el-button @click="handleClick" type="primary" size="small">编辑</el-button>&ndash;&gt;-->
+            <!--<el-button @click="handleClick" type="danger" size="small">删除</el-button>-->
+          <!--</template>-->
+        <!--</el-table-column>-->
 
       </el-table>
     </div>
