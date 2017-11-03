@@ -271,7 +271,7 @@ def order_list(request):
 
 
     # if slf_name == 'admin':
-    if slf_name == '1':
+    if slf_name == 'admin':
         values = Orders.objects.filter(status=1)
     else:
         app_id_list = 1
